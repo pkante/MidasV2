@@ -124,16 +124,19 @@ function ChatWindow() {
   };
 
   return (
-    <div className="w-full h-full bg-black/85 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 flex flex-col">
+    <div className="w-full h-full bg-black/80 rounded-3xl shadow-glass-lg border-gradient flex flex-col relative overflow-hidden backdrop-blur-3xl">
+      {/* Noise texture overlay */}
+      <div className="absolute inset-0 glass-noise pointer-events-none"></div>
+      
       {/* Header */}
       <div
-        className="px-6 py-4 border-b border-white/10 flex items-center justify-between"
+        className="relative px-6 py-4 border-b glass-border flex items-center justify-between z-10"
         style={{ WebkitAppRegion: 'drag' }}
       >
-        <h2 className="text-white text-lg font-semibold tracking-wide">Midas</h2>
+        <h2 className="text-white text-lg font-medium tracking-glass text-glass">Midas</h2>
         <button
           onClick={handleClose}
-          className="text-gray-400 hover:text-white transition-colors duration-200"
+          className="text-white/60 hover:text-white transition-colors duration-200 p-1.5 rounded-lg hover:bg-white/10"
           style={{ WebkitAppRegion: 'no-drag' }}
         >
           <svg
@@ -142,11 +145,11 @@ function ChatWindow() {
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
+            strokeWidth={2}
           >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth={2}
               d="M6 18L18 6M6 6l12 12"
             />
           </svg>
@@ -154,24 +157,24 @@ function ChatWindow() {
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-4">
+      <div className="relative flex-1 overflow-y-auto p-6 space-y-4 glass-scrollbar z-10">
         {messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-gray-400">
+          <div className="flex flex-col items-center justify-center h-full text-white/40">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-16 w-16 mb-4 opacity-40"
+              className="h-16 w-16 mb-4 opacity-30"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
+              strokeWidth={1.5}
             >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={1.5}
                 d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
               />
             </svg>
-            <p className="text-center text-sm">Start a conversation with Midas</p>
+            <p className="text-center text-sm tracking-glass">Start a conversation with Midas</p>
           </div>
         ) : (
           messages.map((msg, idx) => (
@@ -180,11 +183,11 @@ function ChatWindow() {
         )}
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-gray-800/80 text-gray-100 border border-white/5 px-4 py-3 rounded-2xl">
+            <div className="glass-panel px-4 py-3 rounded-2xl border glass-border shadow-glass-sm">
               <div className="flex space-x-2">
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                <div className="w-2 h-2 bg-white/60 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
               </div>
             </div>
           </div>
@@ -193,11 +196,11 @@ function ChatWindow() {
       </div>
 
       {/* Input Area */}
-      <div className="p-4 border-t border-white/10">
+      <div className="relative p-4 border-t glass-border z-10">
         <div className="flex items-center space-x-2">
           {/* Image Upload Button */}
           <button
-            className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-white/5 transition-all duration-200"
+            className="text-white/50 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-all duration-200"
             title="Upload Image (Coming Soon)"
           >
             <svg
@@ -218,7 +221,7 @@ function ChatWindow() {
 
           {/* Voice Input Button */}
           <button
-            className="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-white/5 transition-all duration-200"
+            className="text-white/50 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-all duration-200"
             title="Voice Input (Coming Soon)"
           >
             <svg
@@ -244,20 +247,20 @@ function ChatWindow() {
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
             placeholder="Ask me anything..."
-            className="flex-1 bg-white/5 text-white px-4 py-3 rounded-xl border border-white/10 focus:outline-none focus:ring-2 focus:ring-white/30 focus:border-white/20 placeholder-gray-500 transition-all"
+            className="flex-1 glass-panel text-white px-4 py-3 rounded-xl glass-border focus:outline-none focus:border-white/30 placeholder-white/40 transition-all tracking-glass text-glass"
           />
 
           {/* Send Button */}
           <button
             onClick={handleSend}
             disabled={isLoading}
-            className={`bg-white hover:bg-gray-200 text-black p-3 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl ${
+            className={`glass-panel-strong border-gradient p-3 rounded-xl transition-all duration-200 shadow-glass hover:shadow-glass-lg hover:scale-105 ${
               isLoading ? 'opacity-50 cursor-not-allowed' : ''
             }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              className="h-5 w-5 text-white"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -283,7 +286,7 @@ function MessageBubble({ message }) {
   if (message.sender === 'user') {
     return (
       <div className="flex justify-end">
-        <div className="bg-white text-black font-medium shadow-lg px-4 py-3 rounded-2xl max-w-[80%]">
+        <div className="glass-panel-strong border-gradient shadow-glass px-4 py-3 rounded-2xl max-w-[80%] text-white font-normal tracking-glass">
           {message.text}
         </div>
       </div>
@@ -293,7 +296,7 @@ function MessageBubble({ message }) {
   // AI message with markdown rendering and collapsible thinking
   return (
     <div className="flex justify-start">
-      <div className="bg-gray-800/80 text-gray-100 border border-white/5 px-4 py-3 rounded-2xl max-w-[80%]">
+      <div className="glass-panel text-white/90 glass-border shadow-glass-sm px-4 py-3 rounded-2xl max-w-[80%]">
         {message.isError ? (
           <p className="text-red-400">{message.text}</p>
         ) : (
@@ -318,7 +321,7 @@ function MessageBubble({ message }) {
                           {String(children).replace(/\n$/, '')}
                         </SyntaxHighlighter>
                       ) : (
-                        <code className="bg-gray-700/50 px-1.5 py-0.5 rounded text-sm" {...props}>
+                        <code className="glass-panel px-1.5 py-0.5 rounded text-sm border glass-border" {...props}>
                           {children}
                         </code>
                       );
@@ -335,10 +338,10 @@ function MessageBubble({ message }) {
 
             {/* Chain of Thought Reasoning - Collapsible Dropdown */}
             {message.thinking && (
-              <div className="mt-3 pt-3 border-t border-white/10">
+              <div className="mt-3 pt-3 border-t glass-border">
                 <button
                   onClick={() => setShowThinking(!showThinking)}
-                  className="flex items-center space-x-2 text-gray-400 hover:text-white text-sm transition-colors w-full"
+                  className="flex items-center space-x-2 text-white/50 hover:text-white text-sm transition-colors w-full"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -351,12 +354,12 @@ function MessageBubble({ message }) {
                   </svg>
                   <span>🧠 {showThinking ? 'Hide' : 'Show'} Reasoning</span>
                   {message.isStreaming && !message.thinkingComplete && (
-                    <span className="inline-block w-1 h-3 bg-gray-400 animate-pulse ml-2"></span>
+                    <span className="inline-block w-1 h-3 bg-white/60 animate-pulse ml-2"></span>
                   )}
                 </button>
                 
                 {showThinking && (
-                  <div className="mt-3 p-3 bg-black/40 rounded-lg text-sm text-gray-400 italic font-light">
+                  <div className="mt-3 p-3 glass-panel rounded-lg text-sm text-white/70 italic font-light border glass-border">
                     <pre className="whitespace-pre-wrap font-sans overflow-auto max-h-96">{message.thinking}</pre>
                   </div>
                 )}

@@ -16,16 +16,18 @@ function createFloatingIcon() {
   console.log('Preload path:', preloadPath);
   
   floatingIconWindow = new BrowserWindow({
-    width: 60,
-    height: 60,
-    x: width - 80,
-    y: height - 80,
+    width: 80,
+    height: 80,
+    x: width - 100,
+    y: height - 100,
     frame: false,
     transparent: true,
     alwaysOnTop: true,
     resizable: false,
     skipTaskbar: true,
     movable: true,
+    hasShadow: true,
+    backgroundColor: '#00000000', // Fully transparent background
     webPreferences: {
       preload: preloadPath,
       contextIsolation: true,
@@ -65,17 +67,19 @@ function createChatWindow() {
   const preloadPath = path.join(__dirname, 'preload.cjs');
   
   chatWindow = new BrowserWindow({
-    width: 400,
+    width: 420,
     height: 600,
-    x: width - 420,
+    x: width - 440,
     y: height - 620,
     frame: false,
     transparent: true,
     alwaysOnTop: true,
     resizable: true,
     show: false,
-    minWidth: 300,
-    minHeight: 400,
+    minWidth: 350,
+    minHeight: 450,
+    hasShadow: true,
+    backgroundColor: '#00000000', // Fully transparent background
     webPreferences: {
       preload: preloadPath,
       contextIsolation: true,
