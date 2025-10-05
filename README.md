@@ -2,6 +2,10 @@
 
 A floating desktop assistant built with Electron and React.
 
+## Demo
+
+![Midas Assistant Demo](images/IMG_9459.png)
+
 ## Features
 
 - 🎯 Floating draggable icon

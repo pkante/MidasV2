@@ -13,6 +13,19 @@ function ChatWindow() {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
+  useEffect(() => {
+    const className = 'chat-shell';
+    const root = document.getElementById('root');
+
+    document.body.classList.add(className);
+    root?.classList.add(className);
+
+    return () => {
+      document.body.classList.remove(className);
+      root?.classList.remove(className);
+    };
+  }, []);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -29,13 +42,18 @@ function ChatWindow() {
     if (input.trim() && !isLoading) {
       const userMessage = input.trim();
       
-      // Add user message
-      setMessages(prev => [...prev, { text: userMessage, sender: 'user' }]);
+      // Add user message with unique ID
+      const userMessageId = Date.now();
+      setMessages(prev => [...prev, { 
+        id: userMessageId, 
+        text: userMessage, 
+        sender: 'user' 
+      }]);
       setInput('');
       setIsLoading(true);
 
-      // Create a new streaming message
-      const streamingMessageId = Date.now();
+      // Create a new streaming message with unique ID
+      const streamingMessageId = Date.now() + 1;
       setMessages(prev => [...prev, {
         id: streamingMessageId,
         thinking: '',
@@ -124,9 +142,9 @@ function ChatWindow() {
   };
 
   return (
-    <div className="w-full h-full bg-black/80 rounded-3xl shadow-glass-lg border-gradient flex flex-col relative overflow-hidden backdrop-blur-3xl">
+    <div className="w-full h-full bg-black/70 rounded-3xl shadow-glass-lg border-gradient flex flex-col relative overflow-hidden">
       {/* Noise texture overlay */}
-      <div className="absolute inset-0 glass-noise pointer-events-none"></div>
+      <div className="absolute inset-0 glass-noise pointer-events-none -z-10"></div>
       
       {/* Header */}
       <div
@@ -157,7 +175,7 @@ function ChatWindow() {
       </div>
 
       {/* Messages Area */}
-      <div className="relative flex-1 overflow-y-auto p-6 space-y-4 glass-scrollbar z-10">
+      <div className="relative flex-1 overflow-y-auto p-6 space-y-4 glass-scrollbar z-10 isolate">
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full text-white/40">
             <svg
@@ -177,8 +195,8 @@ function ChatWindow() {
             <p className="text-center text-sm tracking-glass">Start a conversation with Midas</p>
           </div>
         ) : (
-          messages.map((msg, idx) => (
-            <MessageBubble key={idx} message={msg} />
+          messages.map((msg) => (
+            <MessageBubble key={msg.id} message={msg} />
           ))
         )}
         {isLoading && (
@@ -286,7 +304,7 @@ function MessageBubble({ message }) {
   if (message.sender === 'user') {
     return (
       <div className="flex justify-end">
-        <div className="glass-panel-strong border-gradient shadow-glass px-4 py-3 rounded-2xl max-w-[80%] text-white font-normal tracking-glass">
+        <div className="message-bubble-user border-gradient shadow-glass px-4 py-3 rounded-2xl max-w-[80%] text-white font-normal tracking-glass">
           {message.text}
         </div>
       </div>
@@ -296,7 +314,7 @@ function MessageBubble({ message }) {
   // AI message with markdown rendering and collapsible thinking
   return (
     <div className="flex justify-start">
-      <div className="glass-panel text-white/90 glass-border shadow-glass-sm px-4 py-3 rounded-2xl max-w-[80%]">
+      <div className="message-bubble text-white/90 glass-border shadow-glass-sm px-4 py-3 rounded-2xl max-w-[80%]">
         {message.isError ? (
           <p className="text-red-400">{message.text}</p>
         ) : (
@@ -321,7 +339,7 @@ function MessageBubble({ message }) {
                           {String(children).replace(/\n$/, '')}
                         </SyntaxHighlighter>
                       ) : (
-                        <code className="glass-panel px-1.5 py-0.5 rounded text-sm border glass-border" {...props}>
+                        <code className="bg-white/10 px-1.5 py-0.5 rounded text-sm border glass-border" {...props}>
                           {children}
                         </code>
                       );
@@ -359,7 +377,7 @@ function MessageBubble({ message }) {
                 </button>
                 
                 {showThinking && (
-                  <div className="mt-3 p-3 glass-panel rounded-lg text-sm text-white/70 italic font-light border glass-border">
+                  <div className="mt-3 p-3 bg-black/20 rounded-lg text-sm text-white/70 italic font-light border glass-border">
                     <pre className="whitespace-pre-wrap font-sans overflow-auto max-h-96">{message.thinking}</pre>
                   </div>
                 )}
@@ -373,4 +391,3 @@ function MessageBubble({ message }) {
 }
 
 export default ChatWindow;
-

@@ -35,7 +35,7 @@ export async function* streamMessageToGemini(userMessage, onChunk) {
     let answerStarted = false;
 
     for await (const chunk of result.stream) {
-      console.log('📦 Received chunk:', JSON.stringify(chunk, null, 2).substring(0, 200));
+      //console.log('📦 Received chunk:', JSON.stringify(chunk, null, 2).substring(0, 200));
       
       const candidates = chunk.candidates;
       
@@ -43,6 +43,14 @@ export async function* streamMessageToGemini(userMessage, onChunk) {
         const parts = candidates[0].content.parts;
         
         for (const part of parts) {
+          //console.log('🔍 Part keys:', Object.keys(part));
+          if (part.thought !== undefined) {
+            //console.log('🧭 part.thought value preview:', JSON.stringify(part.thought).slice(0, 200));
+          }
+          if (part.text) {
+            //console.log('📝 part.text preview:', part.text.slice(0, 120));
+          }
+          console.log('---');
           // Check if this part is thinking using the boolean flag
           if (part.thought === true) {
             // This is thinking/reasoning - text is in part.text
@@ -62,7 +70,7 @@ export async function* streamMessageToGemini(userMessage, onChunk) {
             if (!answerStarted) {
               answerStarted = true;
               thinkingComplete = true;
-              console.log('✅ Thinking complete, starting answer');
+              //console.log('✅ Thinking complete, starting answer');
               
               yield {
                 type: 'thinking_complete',
@@ -73,7 +81,7 @@ export async function* streamMessageToGemini(userMessage, onChunk) {
             }
             
             // This is the answer
-            console.log('💬 Answer chunk:', part.text.substring(0, 100));
+            //console.log('💬 Answer chunk:', part.text.substring(0, 100));
             
             yield {
               type: 'answer',
@@ -105,4 +113,3 @@ export async function* streamMessageToGemini(userMessage, onChunk) {
     if (onChunk) onChunk({ type: 'error', error: error.message });
   }
 }
-
