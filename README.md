@@ -1,16 +1,11 @@
 # Midas Assistant
 
-A floating desktop assistant built with Electron and React.
+Midas is a desktop assistant that you can access by clicking its icon on the bottom right of your screen. Once you click the icon you will be taken to a chat window (shown in the demo below). You can ask Midas simple questions, and it will retain a running memory of who you are and what you ask, along with a chat history! I plan to add MCP so that it can automate workflows, and I want to add nanobrowser to allow Midas to use the web. 
 
 ## Demo
 
 ![Midas Assistant Demo](images/IMG_9459.png)
 
-## Features
-
-- 🎯 Floating draggable icon
-- 💬 Translucent dark mode chat UI
-- 🚀 Cross-platform (macOS, Windows, Linux)
 
 ## Setup
 
@@ -30,6 +25,7 @@ npm run dev
 - Drag the icon anywhere on your screen
 - Click the icon to open the chat window
 - Click the X button to close the chat window
+- Click the icon to reopen the chat window (it will save your message so don't worry!)
 
 ## Tech Stack
 
