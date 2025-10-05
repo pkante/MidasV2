@@ -1,8 +1,8 @@
-# Midas Assistant
+# Midas - AI Desktop Assistant
 
-Midas is a desktop assistant that you can access by clicking its icon on the bottom right of your screen. Once you click the icon you will be taken to a chat window (shown in the demo below). You can ask Midas simple questions, and it will retain a running memory of who you are and what you ask, along with a chat history! I plan to add MCP so that it can automate workflows, and I want to add nanobrowser to allow Midas to use the web. 
+Midas is a desktop assistant that you can access by clicking its icon on the bottom right of your screen. Once you click the icon you will be taken to a chat window (shown in the image below). You can ask Midas simple questions, and it will retain a running memory of who you are and what you ask, along with a chat history! I plan to add MCP so that it can automate workflows, and I want to add nanobrowser to allow Midas to use the web. 
 
-## Demo
+## How it Looks
 
 ![Midas Assistant Demo](images/IMG_9459.png)
 
@@ -33,4 +33,11 @@ npm run dev
 - **React** - UI library
 - **Vite** - Build tool
 - **Tailwind CSS** - Styling
+
+## To Do
+
+- **Memory** - Add memory layer on top of Midas
+- **MCP** - Add MCP to plug in to productivity apps
+- **Browser Capabilities** - Add browser using capabilities
+- **Vendor Lock-In** - Make it generalizeable to any model (currently using gemini bc it is free for me)
 
